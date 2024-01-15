@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.yedam.app.emp.mapper.EmpMapper">
+  
+  	<!-- 전체조회 -->
+	  	<select id="selectEmpList" resultType="EmpVO">
+	  		SELECT employee_id
+	  			, last_name
+	  			, email
+	  			, hire_date
+	  			, job_id
+	  			, salary
+	  		FROM employees
+	  		ORDER BY employee_id
+	  	</select>
+  	
+  	<!-- 단건조회 -->
+ 	  	<select id="selectEmpInfo" resultType="EmpVO">
+ 	  		SELECT employee_id
+	  			, last_name
+	  			, email
+	  			, hire_date
+	  			, job_id
+	  			, salary
+	  		FROM employees
+	  		WHERE employee_id = #{employeeId}
+									  		
+	<!-- 
+		column LIkE '%' || #{field} || '%'
+		column LIkE '%${field}%' 
+	-->	
+	  	</select> 
+	  	
+   	<!-- 등록 -->
+		<insert id="insertEmpInfo" parameterType="EmpVO">
+			<!--  selectkey 결과는 "단일값" 이어야함! 수행결과는 parameterType에 담김. empVO안에 존재하는 필드만 keyproperty로   -->
+			<selectKey keyProperty="employeeId"
+						resultType="int"
+						order="BEFORE">
+				<!-- sequence 사용없이 자동부여할때 많이 쓰ㅁ -->
+				SELECT NVL(MAX(employee_id), 0) + 1
+				FROM employees		
+			</selectKey>
+			INSERT INTO employees
+					(
+					employee_id
+					, last_name
+					, email
+					, hire_date
+					, job_id
+					, salary
+					)
+					VALUES
+					(
+					#{employeeId}
+					, #{lastName}
+					, #{email}
+					, #{hireDate}
+					, #{jobId}
+					, #{salary}
+					)
+		</insert>   	
+   	
+    <!-- 수정 : 아래의 형태는 반드시 전제조건 필요! 수정여부와 상관없이 전체데이터 전송됨. --> 
+		<update id="updateEmpInfo" parameterType="EmpVO">
+			UPDATE employees
+				SET
+					last_name = #{lastName},
+					email = #{email},
+					salary = #{salary}
+			WHERE employee_id = #{employeeId}							
+		</update>   
+			
+    <!-- 삭제 -->
+    	<delete id="deleteEmpInfo" parameterType="int">
+    		DELETE FROM employees
+    		WHERE employee_id = #{eid}
+		</delete>   
+			
+  <!-- 수정 : 변경된 데이터만 수정 -->
+	  <update id="updateEmpInfoDynamic" parameterType="EmpVO">
+		  UPDATE employees
+		  	SET 
+		  		<choose>
+		  			<when test= "lastName != null and !LastName.equals('')" > 
+		  				last_name = #{lastName}
+		  			</when>
+		  			<otherwise>
+		  				last_name = 'Any'
+		  			</otherwise>
+		  		</choose>
+		  		
+		  		<if test="email != null">
+		  			, email = #{email}
+		  		</if>
+		  		
+		  		<if test="salary >= 0">
+		  			, salary = #{salary}
+		  		</if>
+		 
+		  	<where>
+			  	<if test="employeeId > 0" >
+			  		employee_id= #{employeeId}
+			  	</if>
+		  	</where>	
+		  	
+	  </update>
+	  
+	  
+	 <!-- 매개변수 2개 -->
+	 <update id="updateEmpSal">
+	 	UPDATE employees
+	 	SET salary = salary * #{info.salary} <!-- 객체내무에 여러값 있음. -->
+	 	WHERE employee_id = #{eid}
+	 </update>
+  
+  </mapper>
