@@ -7,32 +7,6 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-<!-- Root -->
-<context:property-placeholder location="classpath:database.properties" />
 
-<!-- datasource connection pool -->
-<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-  <property name="driverClassName" value="${dbClass}" />
-  <property name="jdbcUrl"    value="${dbUrl}" />
-  <property name="username"   value="${dbId}" />
-  <property name="password"   value="${dbPwd}" />
-</bean>
-
-<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" 
-      destroy-method="close">
-  <constructor-arg ref="hikariConfig" />
-</bean>
-
-<!-- mybatis  SqlSessionFactory -->
-<bean class="org.mybatis.spring.SqlSessionFactoryBean">
-  <property name="dataSource" ref="dataSource"/>
-  <property name="configLocation"  value="classpath:mybatis-config.xml" /> <!-- mybatis 빈 등록하면 해줘야 함. -->
-  
-<!-- mapperLocation : 존재하면 내용 확인 필요 --> 
-
-</bean>
-
-<!-- mapper scan -->
-<mybatis-spring:scan base-package="com.yedam.app.**.mapper" />
 
 </beans>

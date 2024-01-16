@@ -8,6 +8,7 @@ import com.yedam.app.emp.service.EmpVO;
 
 public interface EmpMapper {
 // !interface 위에는 특별한 case 제외하곤 annotation 잘 안씀
+//return타입 정해져있지만 service는 X
 	
 	//전체조회
 	public List<EmpVO> selectEmpList();

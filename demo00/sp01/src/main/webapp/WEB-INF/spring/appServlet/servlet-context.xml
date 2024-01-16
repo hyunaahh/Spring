@@ -9,18 +9,22 @@
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
-	<!-- Enables the Spring MVC @Controller programming model -->
+	<!-- Enables the Spring MVC "@Controller" programming model . 그대로두기.. -->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<!-- 정적인 파일에 대해서 물리적 위치를 전부 경로로 mapping 하는거. (mapping: 불러올때는 얘 ,   location = webapp 밑에 있는 resources) -->
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<!-- JSP파일 처리.(해석x 경로알려주는애) *필요에 따라 2,3개씩 등록해서 사용할 수도 있음. -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	
+	<!-- bean에 대한 정보 읽어들여서 처리함. component-scan -->
 	<context:component-scan base-package="com.yedam.app" />
 	
 	
