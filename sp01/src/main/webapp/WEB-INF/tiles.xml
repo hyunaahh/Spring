@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+       
+       <!-- tiles 어떤식으로 정의할건지  -->
+       <!--  controller 반환 = name 속성 / definition name은 controller가 반환안할거같은애로 설정해야함. -->
+      <tiles-definitions>
+       <!-- 모든 메뉴에공통으로 적용되는 파일!  -->
+       	<definition name="mainTemplate" template="/WEB-INF/views/layout/default_layout.jsp">
+       		<put-attribute name="header" value="/WEB-INF/views/layout/default_header.jsp"></put-attribute>
+       		<put-attribute name="footer" value="/WEB-INF/views/layout/default_footer.jsp"></put-attribute>
+       	</definition>
+       	
+       
+       <!-- 미리정의된거 상속받아서 덮어쓰거나 추가하는 부분. -->
+       	 <definition name="*/*" extends="mainTemplate">
+       		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp"></put-attribute>
+       	</definition>
+       	
+       	<definition name="home" extends="mainTemplate">
+       		<put-attribute name="content" value="/WEB-INF/views/home.jsp"></put-attribute>
+       	</definition>
+       	
+       	
+      </tiles-definitions>
