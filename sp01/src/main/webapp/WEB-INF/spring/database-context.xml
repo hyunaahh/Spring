@@ -29,11 +29,11 @@
   <property name="dataSource" ref="dataSource"/>
   <property name="configLocation"  value="classpath:mybatis-config.xml" /> <!-- mybatis 빈 등록하면 해줘야 함. -->
   
-<!-- mapperLocation : 존재하면 내용 확인 필요 --> 
-
+<!-- mapperLocation : 존재하면 내용 확인 필요! 얘 들어가면 xml위치 달라짐. 얘안들어가서 지금방식임--> 
+<!-- <property name ="mapperLocations" value="*classpath:mapper/*.xml" /> --> 
 </bean>
 
-<!-- mapper scan -->
+<!-- mapper scan : mapper 패키지 경로 설정 (interface) -->
 <mybatis-spring:scan base-package="com.yedam.app.**.mapper" />
 
 

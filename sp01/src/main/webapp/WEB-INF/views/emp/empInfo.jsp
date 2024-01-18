@@ -63,10 +63,9 @@
 			fetch('empUpdate', {
 				method : 'post',
 				body: new URLSearchParams(empInfo) // key : value(객체)로 전환해주는 클래스.
-				
 			})
 			.then(response => response.json())
-			.then(result=> {
+			.then(result => {
 				console.log('QueryString', result);
 			})
 			.catch(err => console.log(err));
