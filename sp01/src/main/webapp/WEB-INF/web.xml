@@ -24,6 +24,11 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<multipart-config>
+			<max-file-size> 20971520 </max-file-size> <!-- = 20mb -->
+			<max-request-size> 20971520 </max-request-size>
+			<file-size-threshold> 0 </file-size-threshold> <!-- 얼마까지 임시저장안하고 메모리에저장할건지 -->
+		</multipart-config>
 	</servlet>
 		<!-- servlet은 슬러시 / only  -->
 	<servlet-mapping>

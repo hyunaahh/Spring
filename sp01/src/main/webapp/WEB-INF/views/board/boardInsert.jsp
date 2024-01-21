@@ -44,7 +44,7 @@
 //1. JavaScript .ver
  
 	document.querySelector('form[name="insertForm"]')
-	        .addEventListener('submit', boardInsertJs);
+	        .addEventListener('submit', boardInsertJs); //type 속성ㅇ이 submit이니ㅣ까
 	
 	function boardInsertJs(event){
 	    event.preventDefault(); //일단 submit 원래 기능 일시적으로 stop 시키고! 
@@ -94,6 +94,10 @@ function boardInsertJq (event){
 		return;
 	}
 	  insertForm.submit();
+	  
+	 
+
+	  
 }
 
 

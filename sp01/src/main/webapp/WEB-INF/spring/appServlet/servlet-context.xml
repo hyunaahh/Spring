@@ -8,6 +8,7 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<context:property-placeholder location="classpath:path.properties" /> <!-- multipart땜에 만든애(경로설정해야하니깐~. -->
 	
 	<!-- Enables the Spring MVC "@Controller" programming model . 그대로두기.. -->
 	<annotation-driven />
@@ -15,6 +16,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<!-- 정적인 파일에 대해서 물리적 위치를 전부 경로로 mapping 하는거. (mapping: 불러올때는 얘 ,   location = webapp 밑에 있는 resources) -->
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/images/**" location="${file.loading.path}" /> <!-- multipart땜에 만든애. -->
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<!-- JSP파일 처리.(해석x 경로알려주는애) *필요에 따라 2,3개씩 등록해서 사용할 수도 있음. -->
@@ -24,8 +26,8 @@
 		<beans:property name="order" value="2" /> 
 	</beans:bean>
 	
-	<!-- tiles 설정관련정보(definition) -->
-	 <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+	<!-- tiles 설정관련정보(definition) -->  
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 	   <beans:property name="definitions">
 	     <beans:list>
 	       <beans:value>/WEB-INF/tiles.xml</beans:value>
@@ -36,10 +38,16 @@
 	<beans:bean id="tilesViewResolver" class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
 		<beans:property name="order" value="1" /> 
 	</beans:bean>
-	
+
+
+	<!-- 멀티미디어 다룰 애. -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
+
 	<!-- bean에 대한 정보 읽어들여서 처리함. component-scan -->
-	<context:component-scan base-package="com.yedam.app" />
-	
+	<context:component-scan base-package="com.yedam.app" 
+										use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan >
 	
 	
 </beans:beans>

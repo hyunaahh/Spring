@@ -33,7 +33,7 @@
 			<tr>
 				<th>이미지</th> 
 				<!--  webapp/resources (servlet-context.xml 참고) -->
-				<td><img src="<c:url value="/resources/${boardInfo.image }" />"></td>
+				<td><img style="width:200px;" src="<c:url value="/resources/${boardInfo.image }" />"></td>
 			</tr>
 			
 				
@@ -45,7 +45,9 @@
 			
 		</table>
 		
-		<button type="button"> 수정 </button>
-		<button type="button"> 삭제 </button>
+		<button type="button" onclick="location.href='boardUpdate?bno=${boardInfo.bno}'"> 수정 </button>
+		
+		<button type="button" onclick="location.href='boardDelete?bno=${boardInfo.bno}'"> 삭제 </button>
 
 </div>
+

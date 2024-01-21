@@ -18,7 +18,8 @@
 		
 		<tbody>
 		<c:forEach items="${boardList }" var="info"  >	
-			<tr>
+		<!-- controller에서 경로 찾고, 커맨드객체니까 VO클래스 넘어갔을떄 쿼리문에서 사용하는 필드 찾는 순서 -->
+			<tr onclick="location.href='boardInfo?bno=${info.bno }'">
 				<td>${info.bno }</td>
 				<td>${info.title}</td>
 				<td>${info.writer}</td>

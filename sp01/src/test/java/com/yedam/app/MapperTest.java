@@ -13,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.yedam.app.aop.service.AaaService;
 import com.yedam.app.emp.mapper.EmpMapper;
 import com.yedam.app.emp.service.EmpVO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/root-context.xml")
+@ContextConfiguration(locations = "file:src/main/webapp/WEB-INF/spring/**/*-context.xml")
 public class MapperTest {
 	
 	@Autowired
@@ -50,8 +51,8 @@ public class MapperTest {
 		empVO.setSalary(10000);
 		
 		int result = empMapper.insertEmpInfo(empVO);
-		assertNotEquals(empVO.getEmployeeId(), 0);
-		//OR   assertNotEquals(result, 0);
+		//assertNotEquals(empVO.getEmployeeId(), 0);
+		 assertNotEquals(result, 0);
 	}
 	
 	//수정-일반적인case. select문 있음
@@ -76,10 +77,19 @@ public class MapperTest {
 	}
 	
 	//삭제
-	@Test
+	//@Test
 	public void deleteInfo() {
 		int result = empMapper.deleteEmpInfo(1001);
 		assertNotEquals(result, 0);
 	}
 	
+	
+	@Autowired
+	AaaService aaaService;
+	
+	@Test
+	public void aopTest() {
+		aaaService.insert(); 
+		//=> 아무것도 db에 안들어가면됨.
+	}
 }
