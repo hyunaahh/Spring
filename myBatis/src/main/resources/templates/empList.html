@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ 		layout:decorate="~{layout}">
+<head>
+<meta charset="UTF-8">
+	<title>empList.html</title>
+	<style>
+		.odd {background-color : yellow;}
+		.trbold {font-weight : bold;}
+	</style>
+</head>
+
+<body>
+
+<section layout:fragment="content">
+
+<div>전체건수 : [[${#lists.size(list)}	]] 	</div>
+<div th:text="${#lists.size(list)}"></div>
+
+
+	<table>
+	 <tr>
+	 	<th>No. </th>
+		 <th>employee_id</th>
+		 <th>name</th>
+	
+		 <th>hire_date</th>
+		 <th>salary</th>
+		 <th>grade</th>
+	 </tr>
+	 
+	<th:block th:each="emp : ${list}">
+	<tr th:class="${empStat.odd} ? 'odd'" th:classappend="${empStat.first} ? 'trbold' ">
+		<td th:text="${empStat.count}">1</td>
+		
+		 <!-- <td th:text="${emp.employeeId}">100</td> -->
+		 <!-- <td><a th:href="'info.do?employeeId='+ ${emp.employeeId} " th:text="${emp.employeeId}"></a>100</td> -->
+		  <td><a th:href="@{info.do(employeeId=${emp.employeeId}, name=${emp.firstName})} " th:text="${emp.employeeId}"></a> 커서올려보기</td>  
+		  
+		<td th:text="| ${emp.firstName} ${emp.lastName} | ">King</td> 
+			 <!-- <td th:text=" ${emp.firstName} + ' ' + ${emp.lastName}  ">King</td> -->
+			 <!--  <td th:text="${emp.lastName}">Scott</td> -->
+			 <!--  <td th:text="${emp.hireDate }"></td> -->
+		 
+		 <td th:text="${#dates.format(emp.hireDate, 'yyyy-MM') }">2024-02</td>
+		 
+		 <td  th:text="${emp.salary}" class="sal" >1000</td>
+			 <td th:if="${emp.salary}>10000" th:text="A">1000</td>
+			 <td th:unless="${emp.salary}>10000" th:text="B">1000</td>
+		
+	 </tr>
+	 </th:block>
+	</table>
+	
+	<br>
+	<div th:text="'<b>test</b>'"></div>
+	<div th:utext="'<b>test</b>'"></div>
+	<br>
+	<div>[[ ${list[0].firstName} ]]</div>
+	<div>[( ${list[0].firstName} )]</div>
+	<br>
+<!--/* 타임리프 주석 : 이러면 source에서도 안보임. 
+	 <th:block th:each="emp : ${list}">
+	 <span th:text="${emp.firstName}"></span>	 
+	 <span th:text="${emp.firstName}"></span> 
+	 <br>
+	 </th:block>  */-->
+	 
+	 
+	 
+	 <!-- footer 추가하기 : ~{파일명} 페이지가져옴 -->
+	 <!--  
+	 <div class="divFooter" th:insert="~{footer}"> </div>
+	 <div class="divFooter" th:insert="~{footer::copy}"> </div> 
+	 <div class="divFooter" th:replace="~{footer::copy}"> </div>
+	 -->
+	 
+	 <!--  console에서 emps 쳐서 출력되는거 확인하기!  -->
+	 <script th:inline="javascript">
+		let emps = [[ ${list} ]]
+	</script>
+	
+</section>
+	
+</body>
+</html>
